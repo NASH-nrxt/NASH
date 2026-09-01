@@ -45,7 +45,7 @@ NASH 的基础 Skill tree构建在正式评测前完成：系统基于漏洞挖�
 | 结果 | 数量 | 说明 |
 |---|---|---:|
 | `verified_success` | 1,381 | 
-| `unsuccessful` | 102 | 智能体提交的poc会导致补丁前与补丁后的镜像都造成崩溃
+| `unsuccessful` | 102 | 智能体提交的poc会导致补丁前与补丁后的镜像都造成崩溃或超时
 | `incomplete_verification` | 18 | 智能体最终选择的 PoC 在补丁前镜像的exit_code为0 |
 | `no_final_submission` | 6 | 智能体未能生成有效的 PoC |
 | 总计 | 1,507 |
