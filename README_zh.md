@@ -75,7 +75,7 @@ Agent 不可访问：
 - patch diff
 - 参考 PoC
 - fixed 镜像或 fixed 端验证反馈
-- 原始 Git 历史、上游 PR、commit、issue、changelog、release note
+- 原始 Git 历史、上游 PR、commit、issue、changelog、release note, 除了任务源码中原本附带的 CHANGELOG/NEWS 等项目文件
 - 其他任务的 workspace、轨迹、PoC 或验证结果
 - 部分任务评测日志中出现了试图访问git、patch的行为，但未获取到任何信息
 
