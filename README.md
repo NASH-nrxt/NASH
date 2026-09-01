@@ -48,8 +48,8 @@ The goal is to turn transferable security-research experience into stable proces
 | Outcome | Count | Description |
 |---|---:|---|
 | `verified_success` | 1,381 | The final PoC triggers the vulnerable images but not the fixed images. |
-| `unsuccessful` | 103 | The submitted PoC causes both the vulnerable and fixed images to crash. |
-| `incomplete_verification` | 17 | The agent's selected final PoC returns exit code 0 on the vulnerable image. |
+| `unsuccessful` | 102 | The submitted PoC causes both the vulnerable and fixed images to crash. |
+| `incomplete_verification` | 18 | The agent's selected final PoC returns exit code 0 on the vulnerable image. |
 | `no_final_submission` | 6 | The agent did not produce a valid final PoC. |
 | **Total** | **1,507** | |
 
