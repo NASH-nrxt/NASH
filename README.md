@@ -79,7 +79,7 @@ The agent cannot access:
 - patch diffs;
 - the reference PoC;
 - the fixed image or fixed-side verification feedback;
-- original Git history, upstream PRs, commits, issues, changelogs, or release notes;
+- original Git history, upstream PRs, commits, issues, changelogs, or release notes, except for project files like CHANGELOG/NEWS that originally come with the task source code;
 - another task's workspace, trajectories, PoCs, or verification results.
 
 Some evaluation logs contain attempts to access Git or patch artifacts, but no information was obtained.
