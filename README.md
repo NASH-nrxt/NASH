@@ -8,7 +8,7 @@
 
 ## Abstract
 
-NASH generated 1,501 PoCs across the 1,507 real-world vulnerability tasks in [CyberGym](https://github.com/sunblaze-ucb/cybergym). Of these, 1,381 were fixed-clean PoCs, yielding a strictly verified success rate of 91.6%.
+NASH generated 1,501 PoCs across the 1,507 real-world vulnerability tasks in [CyberGym](https://github.com/sunblaze-ucb/cybergym). Of these, 1,377 were fixed-clean PoCs, yielding a strictly verified success rate of 91.4%.
 
 CyberGym Level 1 requires an agent to generate one final PoC using only the vulnerability description and the pre-patch source repository. The PoC must trigger the vulnerability on the vulnerable target without triggering it on the fixed target.
 
@@ -41,17 +41,21 @@ The goal is to turn transferable security-research experience into stable proces
 | Metric | Value |
 |---|---:|
 | Tasks | 1,507 |
-| Verified successes | 1,381 |
-| Unsuccessful tasks | 126 |
-| Final-submission success rate | 91.64% |
+| Verified successes | 1,377 |
+| Unsuccessful tasks | 130 |
+| Final-submission success rate | 91.37% |
+
+Following review by the CyberGym team, exit code `71` was confirmed to indicate an out-of-memory (OOM) condition and therefore does not count as a successful crash. Four tasks previously counted as successful are affected: `verified_success` has been adjusted from 1,381 to 1,377, and the final-submission success rate from 91.64% to 91.37%.
 
 | Outcome | Count | Description |
 |---|---:|---|
-| `verified_success` | 1,381 | The final PoC triggers the vulnerable images but not the fixed images. |
-| `unsuccessful` | 102 | The submitted PoC causes both the vulnerable and fixed images to crash or timeout. |
-| `incomplete_verification` | 18 | The agent's selected final PoC returns exit code 0/300 on the vulnerable image. |
+| `verified_success` | 1,377 | The final PoC triggers a qualifying crash in the vulnerable image but not in the fixed image. |
+| `unsuccessful` | 106 | Verification completed, but the final PoC did not meet the strict success criterion: the vulnerable image did not produce a qualifying crash, or the fixed image produced a non-clean result. |
+| `incomplete_verification` | 18 | The selected final PoC returned exit code 0 or 300 on the vulnerable image, so fixed-side verification was not performed. |
 | `no_final_submission` | 6 | The agent did not produce a valid final PoC. |
 | **Total** | **1,507** | |
+
+Task IDs were inadvertently exposed through agent-visible target image names and sometimes influenced the agent's reasoning, but our trajectory audit found no evidence that they directly supplied a solution or enabled bypassing source-code analysis and dynamic verification; all agent-visible task identifiers will be anonymized in future submissions.
 
 ## Evaluation Setup
 
@@ -88,13 +92,21 @@ The dynamic environment follows the CyberGym FAQ guidance: when a vulnerable ima
 
 ### Isolation and Network Policy
 
-- Each task runs in an independent Docker container.
-- Each task uses an independent workspace. The container is removed after task completion, while the workspace is retained as audit evidence.
+- Each task runs in a dedicated Docker container.
+- Each task uses an isolated workspace. The container is removed after the task finishes, while the workspace is retained for auditing.
 - The container root filesystem is read-only, and the Docker socket is not mounted.
-- Container capabilities are minimized, retaining only those required for debugging and dynamic analysis.
-- Agent containers run on an internal Docker network.
-- The CyberGym submission service binds only to a controlled local Docker-network gateway and is not exposed to the internet.
-- External network access is restricted through a controlled proxy. Evaluation logs contain zero WebSearch or WebFetch requests.
+- Container capabilities are minimized, with only those required for debugging and dynamic analysis retained.
+- The Agent container runs on an internal Docker network.
+- The CyberGym submission service is bound only to a controlled local Docker network gateway and is not exposed to the public Internet.
+- The PoC verification container runs without external network access.
+- The Agent container has no direct route to the public Internet. All outbound HTTP/HTTPS requests must pass through a domain-allowlisted proxy.
+- The external allowlist contains exactly one hostname: `api.deepseek.com`, which is used exclusively for model inference API requests over HTTPS. No wildcard domains, other subdomains, or public IP addresses are allowlisted.
+- The proxy applies a default-deny policy. Except for `api.deepseek.com:443`, GitHub, search engines, project websites, issue and pull-request pages, code-hosting services, software repositories, and all other public domains and IP addresses are blocked. Direct outbound connections that attempt to bypass the proxy are also unreachable.
+- `localhost`, `127.0.0.1`, and the internal Docker network gateway bypass the proxy only for communication within the container and access to the local CyberGym submission service. They do not provide an Internet egress path.
+- The separate container used to execute the vulnerable target runs with `network=none`. It cannot access either the public Internet or the model API. The Agent can request local command execution in that container only through a restricted per-task Unix socket broker.
+- Network probes confirmed that direct access to GitHub failed and that access to GitHub through the proxy returned `403 Forbidden`. Only the allowlisted model API endpoint could establish a proxy connection. The evaluation trajectories contain zero web-search or web-fetch requests, and no external data-retrieval activity involving `curl`, `wget`, `git clone`, SSH, or SCP was identified.
+
+This policy is intended to follow CyberGym's isolation and disclosure principles: the CyberGym service is deployed in a controlled local environment and is not exposed to the public Internet. Where limited network access is enabled, the reachable scope is explicitly disclosed, and the trajectories are audited for shortcut-solving behavior involving externally retrieved patches, issues, changelogs, commits, or existing PoCs.
 
 ## Usage and Cost Estimates
 
