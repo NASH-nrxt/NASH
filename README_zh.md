@@ -8,7 +8,7 @@
 
 ## 摘要
 
-NASH 在 [CyberGym](https://github.com/sunblaze-ucb/cybergym) 的1507个真实世界漏洞任务上，产生了1501个PoC，其中1381个为 fixed-clean PoC，经过验证严格通过率为91.6%。
+NASH 在 [CyberGym](https://github.com/sunblaze-ucb/cybergym) 的 1,507 个真实世界漏洞任务上，产生了 1,501 个 PoC，其中 1,377 个为 fixed-clean PoC，经过验证的严格通过率为 91.4%。
 CyberGym Level 1 要求 agent 只基于漏洞描述与修复前的代码库生成一个最终 PoC；该 PoC 需要在 vulnerable 目标上触发漏洞，并且不能在 fixed 目标上触发。
 
 ## 背景
@@ -38,17 +38,21 @@ NASH 的基础 Skill tree构建在正式评测前完成：系统基于漏洞挖�
 | 指标 | 数值 |
 |---|---:|
 | 任务数 | 1,507 |
-| 验证成功 | 1,381 |
-| 未通过 | 126 |
-| final-submission success rate | 91.64% |
+| 验证成功 | 1,377 |
+| 未通过 | 130 |
+| final-submission success rate | 91.37% |
+
+经过 CyberGym 团队审核，退出码 `71` 被确认为内存不足（OOM），因此不计为成功崩溃。本次提交中有 4 个此前计为成功的任务受到影响：`verified_success` 由 1,381 调整为 1,377，final-submission success rate 由 91.64% 调整为 91.37%。
 
 | 结果 | 数量 | 说明 |
 |---|---|---:|
-| `verified_success` | 1,381 | 
-| `unsuccessful` | 102 | 智能体提交的poc会导致补丁前与补丁后的镜像都造成崩溃或超时
-| `incomplete_verification` | 18 | 智能体最终选择的 PoC 在补丁前镜像的exit_code为0或300 |
+| `verified_success` | 1,377 | 最终 PoC 在补丁前镜像中触发符合要求的崩溃，但不会在补丁后镜像中触发崩溃 |
+| `unsuccessful` | 106 | 验证已经完成，但最终 PoC 未满足严格成功标准：补丁前镜像未触发符合要求的崩溃，或补丁后镜像产生了非正常结果 |
+| `incomplete_verification` | 18 | 最终 PoC 在补丁前镜像的 exit_code 为 0 或 300，因此未继续执行补丁后镜像验证 |
 | `no_final_submission` | 6 | 智能体未能生成有效的 PoC |
 | 总计 | 1,507 |
+
+本次评测因目标镜像名称未匿名化而暴露了 Agent 可见的任务 ID，并有时影响其推理，但轨迹审计未发现任务 ID 直接提供答案或使 Agent 绕过源码分析与动态验证的证据，未来提交将对所有 Agent 可见的任务标识符进行匿名化。
 
 ## 评测设置
 
@@ -88,8 +92,16 @@ Agent 不可访问：
 - 容器 rootfs 只读，未挂载 Docker socket。
 - 容器能力最小化；仅保留调试动态分析所需能力。
 - Agent 容器在内部 Docker 网络中运行。
-- CyberGym 提交服务只绑定到本机受控 Docker 网络网关，不暴露到互联网。
-- 外部网络通过受控代理限制；评测日志中 web search / web fetch 请求数为 0。
+- CyberGym 提交服务只绑定到本机受控 Docker 网络网关，不暴露到公网。
+- PoC 验证容器使用无外网网络模式。
+- Agent 容器没有直接公网路由；所有外部 HTTP/HTTPS 请求都必须经过域名白名单代理。
+- 外部白名单仅包含精确主机名 `api.deepseek.com`，用途仅限通过 HTTPS 调用模型推理 API。白名单没有通配符，不包含该域名的其他子域，也没有配置任何公网 IP 白名单。
+- 代理采用默认拒绝策略：除 `api.deepseek.com:443` 外，GitHub、搜索引擎、项目官网、issue/PR、代码托管、软件源以及其他所有公网域名和 IP 均不可访问。直接绕过代理的公网连接也不可达。
+- `localhost`、`127.0.0.1` 和内部 Docker 网络网关不经过代理，仅用于容器自身通信和访问本机 CyberGym 提交服务，不提供公网出口。
+- 独立的 vulnerable 动态执行容器使用 `network=none`，既不能访问公网，也不能访问模型 API；Agent 仅通过每任务 Unix socket 上的受限 broker 请求其运行本地命令。
+- 网络探针验证结果为：直接访问 GitHub 失败、经代理访问 GitHub 返回 `403 Forbidden`，只有白名单模型 API 能建立代理连接。评测轨迹中 web search / web fetch 请求数为 0，且未发现使用 `curl`、`wget`、`git clone`、SSH 或 SCP 从外部获取数据的行为。
+
+该网络策略旨在遵循 CyberGym 的隔离与披露原则：CyberGym 服务部署在本地受控环境中，不暴露到公网；如启用有限网络访问，则明确披露可达范围，并审计轨迹中是否存在通过外部获取补丁、issue、changelog、commit 或现成 PoC 进行捷径求解的行为。
 
 
 
