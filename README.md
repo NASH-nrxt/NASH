@@ -123,4 +123,4 @@ The evaluation spanned a DeepSeek pricing adjustment. For consistency, the repor
 
 ---
 
-NASH is an Agent harness from security research team of Nanjing NARI INFORMATION & Communication Technology Co., Ltd., working on AI for security and security for AI.
+NASH is an Agent harness from security research team of Nanjing NARI INFORMATION & Communication Technology Co., Ltd.. The team is dedicated to AI-enabled security and AI-native security.
