@@ -1,6 +1,6 @@
 # NASH on CyberGym
 
-*NASH是南京南瑞信息通信科技有限公司人工智能安全研究团队研究的Agent系统*
+*NASH（NARI Agentic Security Harness）是南京南瑞信息通信科技有限公司人工智能安全研究团队研究的Agent系统*
 
 [English](README.md) · **中文**
 
@@ -8,7 +8,7 @@
 
 ## 摘要
 
-NASH （NARI Agentic Security Harness）在 [CyberGym](https://github.com/sunblaze-ucb/cybergym) 的 1,507 个真实世界漏洞任务上，产生了 1,501 个 PoC，其中 1,377 个为 fixed-clean PoC，经过验证的严格通过率为 91.4%。
+NASH 在 [CyberGym](https://github.com/sunblaze-ucb/cybergym) 的 1,507 个真实世界漏洞任务上，产生了 1,501 个 PoC，其中 1,377 个为 fixed-clean PoC，经过验证的严格通过率为 91.4%。
 CyberGym Level 1 要求 agent 只基于漏洞描述与修复前的代码库生成一个最终 PoC；该 PoC 需要在 vulnerable 目标上触发漏洞，并且不能在 fixed 目标上触发。
 
 ## 背景
@@ -120,4 +120,4 @@ Agent 不可访问：
 
 ---
 
-NASH是南京南瑞信息通信科技有限公司人工智能安全研究团队研究的Agent系统，团队致力于AI赋能安全、AI本体安全工作。
+NASH（NARI Agentic Security Harness）是南京南瑞信息通信科技有限公司人工智能安全研究团队研发的Agent系统，团队致力于AI赋能安全、AI本体安全工作。
