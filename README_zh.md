@@ -1,6 +1,6 @@
 # NASH on CyberGym
 
-*NASH（NARI Agentic Security Harness）是南京南瑞信息通信科技有限公司人工智能安全研究团队研究的Agent系统*
+*NASH（NARI Agentic Security Harness）是南京南瑞信息通信科技有限公司人工智能安全团队研究的Agent系统*
 
 [English](README.md) · **中文**
 
@@ -117,7 +117,3 @@ Agent 不可访问：
 | 估算模型成本 | 5.84 元 | 8789.8 元 |
 
 本次评测算力计费规则说明：测评中间经历了DeepSeek价格调整，当前成本为统一换算到涨价后的价格得到的成本。
-
----
-
-NASH（NARI Agentic Security Harness）是南京南瑞信息通信科技有限公司人工智能安全研究团队研发的Agent系统，团队致力于AI赋能安全、AI本体安全工作。
