@@ -1,6 +1,6 @@
 # NASH on CyberGym
 
-*一个由自优化安全 Skill Tree驱动的AI执行框架*
+*NASH是南京南瑞信息通信技术有限公司人工智能安全研究团队研究的Agent系统*
 
 [English](README.md) · **中文**
 
@@ -8,7 +8,7 @@
 
 ## 摘要
 
-NASH 在 [CyberGym](https://github.com/sunblaze-ucb/cybergym) 的 1,507 个真实世界漏洞任务上，产生了 1,501 个 PoC，其中 1,377 个为 fixed-clean PoC，经过验证的严格通过率为 91.4%。
+NASH （NARI Agentic Security Harness）在 [CyberGym](https://github.com/sunblaze-ucb/cybergym) 的 1,507 个真实世界漏洞任务上，产生了 1,501 个 PoC，其中 1,377 个为 fixed-clean PoC，经过验证的严格通过率为 91.4%。
 CyberGym Level 1 要求 agent 只基于漏洞描述与修复前的代码库生成一个最终 PoC；该 PoC 需要在 vulnerable 目标上触发漏洞，并且不能在 fixed 目标上触发。
 
 ## 背景
@@ -117,3 +117,7 @@ Agent 不可访问：
 | 估算模型成本 | 5.84 元 | 8789.8 元 |
 
 本次评测算力计费规则说明：测评中间经历了DeepSeek价格调整，当前成本为统一换算到涨价后的价格得到的成本。
+
+---
+
+NASH是南京南瑞信息通信技术有限公司人工智能安全研究团队研究的Agent系统，致力于AI为了安全、为了AI而安全。
