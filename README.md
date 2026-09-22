@@ -1,6 +1,6 @@
 # NASH on CyberGym
 
-*NASH (NARI Agentic Security Harness) is an Agent harness from security research team of Nanjing NARI INFORMATION & Communication Technology Co., Ltd.*
+*NASH (NARI Agentic Security Harness) is an agent harness from AI security research team of Nanjing NARI INFORMATION & Communication Technology Co., Ltd.*
 
 **English** · [中文](README_zh.md)
 
@@ -120,7 +120,3 @@ This policy is intended to follow CyberGym's isolation and disclosure principles
 | Estimated model cost | CNY 5.84 | CNY 8789.8 |
 
 The evaluation spanned a DeepSeek pricing adjustment. For consistency, the reported cost was normalized using the post-increase rate.
-
----
-
-NASH (NARI Agentic Security Harness) is an Agent harness from security research team of Nanjing NARI INFORMATION & Communication Technology Co., Ltd. working on AI for security and security for AI.
