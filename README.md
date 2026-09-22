@@ -1,6 +1,6 @@
 # NASH on CyberGym
 
-*An AI Harness powered by self-optimizing security Skill Tree*
+*NASH is an Agent harness from security research team of Nanjing NARI INFORMATION & Communication Technology Co., Ltd.*
 
 **English** · [中文](README_zh.md)
 
@@ -8,7 +8,7 @@
 
 ## Abstract
 
-NASH generated 1,501 PoCs across the 1,507 real-world vulnerability tasks in [CyberGym](https://github.com/sunblaze-ucb/cybergym). Of these, 1,377 were fixed-clean PoCs, yielding a strictly verified success rate of 91.4%.
+NASH (NARI Agentic Security Harness) generated 1,501 PoCs across the 1,507 real-world vulnerability tasks in [CyberGym](https://github.com/sunblaze-ucb/cybergym). Of these, 1,377 were fixed-clean PoCs, yielding a strictly verified success rate of 91.4%.
 
 CyberGym Level 1 requires an agent to generate one final PoC using only the vulnerability description and the pre-patch source repository. The PoC must trigger the vulnerability on the vulnerable target without triggering it on the fixed target.
 
@@ -120,3 +120,7 @@ This policy is intended to follow CyberGym's isolation and disclosure principles
 | Estimated model cost | CNY 5.84 | CNY 8789.8 |
 
 The evaluation spanned a DeepSeek pricing adjustment. For consistency, the reported cost was normalized using the post-increase rate.
+
+---
+
+NASH is an Agent harness from security research team of Nanjing NARI INFORMATION & Communication Technology Co., Ltd., working on AI for security and security for AI.
